@@ -1,0 +1,45 @@
+		if (tile == 32) {
+					if (world->items[x + (y * world->width)].foreground == 3832) { // stuff weather dialog
+						if (x != 0)
+						{
+							((PlayerInfo*)(peer->data))->lastPunchX = x;
+						}
+						if (y != 0)
+						{
+							((PlayerInfo*)(peer->data))->lastPunchY = y;
+						}
+						GamePacket p = packetEnd(appendString(appendString(createPacket(), "OnDialogRequest"), "set_default_color|`o\n\nadd_label_with_icon|big|`wStuff Weather Machine``|left|3832|\nadd_item_picker|stuffitem|Edit Item|Choose any item you want to pick|\nadd_spacer|small|\nadd_text_input|gravity|Gravity Value||4|\nadd_spacer|small|\nadd_quick_exit|\nend_dialog|stuff|Nevermind||"));
+						ENetPacket* packet = enet_packet_create(p.data,
+							p.len,
+							ENET_PACKET_FLAG_RELIABLE);
+						enet_peer_send(peer, 0, packet);
+						delete p.data;
+					}
+				}
+				if (tile == 32) {
+					if (world->items[x + (y * world->width)].foreground == 5000) { // background weather dialog
+						if (x != 0)
+						{
+							((PlayerInfo*)(peer->data))->lastPunchX = x;
+						}
+						if (y != 0)
+						{
+							((PlayerInfo*)(peer->data))->lastPunchY = y;
+						}
+						GamePacket p = packetEnd(appendString(appendString(createPacket(), "OnDialogRequest"), "set_default_color|`o\n\nadd_label_with_icon|big|`wWeather Machine - Background``|left|5000|\nadd_item_picker|backgrounditem|Edit Item|Select any Background Block|\nadd_spacer|small|\nadd_spacer|small|\nadd_quick_exit|\nend_dialog|Okay|Cancel||"));
+						ENetPacket* packet = enet_packet_create(p.data,
+							p.len,
+							ENET_PACKET_FLAG_RELIABLE);
+						enet_peer_send(peer, 0, packet);
+						delete p.data;
+					}
+				}
+				if (tile == 32) {
+					if (world->items[x + (y * world->width)].foreground == 242 || world->items[x + (y * world->width)].foreground == 5814 || world->items[x + (y * world->width)].foreground == 2408 || world->items[x + (y * world->width)].foreground == 1796 || world->items[x + (y * world->width)].foreground == 4428 || world->items[x + (y * world->width)].foreground == 7188) {
+						
+						GamePacket p = packetEnd(appendString(appendString(createPacket(), "OnDialogRequest"), "set_default_color|`o\n\nadd_label_with_icon|big|`wEdit " + GetItemDef(world->items[x + (y * world->width)].foreground).name + "``|left|" + to_string(world->items[x + (y * world->width)].foreground) + "|\nadd_textbox|`wAccess list:|left|\nadd_spacer|small|" + offlinelist + "add_spacer|small|\nadd_player_picker|netid|`wAdd|\nadd_spacer|small|\nadd_checkbox|isWorldPublic|Allow anyone to build|" + std::to_string(ischecked) + "|\nadd_checkbox|allowNoclip|Disable noclip|" + std::to_string(noclap) + "|\nend_dialog|wlmenu|Cancel|OK|"));
+						ENetPacket* packet = enet_packet_create(p.data,
+							p.len,
+							ENET_PACKET_FLAG_RELIABLE);
+						enet_peer_send(peer, 0, packet);
+						delete p.data;
